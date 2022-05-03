@@ -8,6 +8,8 @@ from dotenv import load_dotenv
 load_dotenv()
 from discord.ext import tasks
 from database import DataBase
+channelid_list = [944628350700371998,873612107634065450,873612718425399316,873612194842021959,873612316262944769,
+873612415995093052,873612636217045002,873612848952127528,873612933236662282,873882497778344016]
 users_infodic={}
 loop_time = 0
 store_database_time = 2 #循環幾次儲存資料進資料庫
@@ -83,18 +85,20 @@ async def on_voice_state_update(member,before, after):
         if memberid in users_infodic.keys():
             print("此員工已在資料表內 移除此員工站存資料")
             del users_infodic[memberid]
+            await textChannel.send('<@'+str(memberid)+'>' +' 離開公司,停止計算貢獻值!')
         else:
             print("好像有錯誤... 某人離開了 但他沒加入資料過")
-        await textChannel.send('<@'+str(memberid)+'>' +' 離開公司,停止計算貢獻值!')
+        
     elif after.channel is not None:
         print('<@'+str(memberid)+'>' +' 進入公司上班,開始貢獻心力一同壯大麥歡樂企業!')
-        await textChannel.send('<@'+str(memberid)+'>' +' 進入公司上班,開始貢獻心力一同壯大麥歡樂企業!')
+        
         if memberid in users_infodic.keys():
             print("此員工已在資料表內 不在更動")
         else:
             #使用者 - 分數
             print("此員工不在資料表內 將他加入工作中列表")
             users_infodic[memberid] = 0
+            await textChannel.send('<@'+str(memberid)+'>' +' 進入公司上班,開始貢獻心力一同壯大麥歡樂企業!')
 
     
 @tasks.loop(seconds = 10) # repeat after every 10 seconds
@@ -105,6 +109,16 @@ async def myLoop():
     global loop_time
     global store_database_time
     print(users_infodic)
+    #check is there has missed people
+    for channel in channelid_list:
+        Channel = client.get_channel(channel)
+        users = Channel.members
+        for user in users:
+            if user in users_infodic.keys():
+                pass
+            else:
+                print("加入沒偵測到的使用者")
+                users_infodic[user.id] = 0
     for user in users_infodic:
         users_infodic[user] += 1
     loop_time+=1
