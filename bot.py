@@ -108,11 +108,14 @@ async def myLoop():
     global users_infodic
     global loop_time
     global store_database_time
+    global channelid_list
     print(users_infodic)
+    print(channelid_list)
     #check is there has missed people
     for channel in channelid_list:
         Channel = client.get_channel(channel)
         users = Channel.members
+        print(users)
         for user in users:
             if user in users_infodic.keys():
                 pass
