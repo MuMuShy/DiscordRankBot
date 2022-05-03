@@ -11,6 +11,7 @@ class DataBase():
         self.conn = psycopg2.connect(DATABASE_URL, sslmode='require')
     
     def checkUser(self,user_id):
+        user_id = str(user_id)
         try:
             self.cursor = self.conn.cursor()
         except:

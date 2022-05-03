@@ -111,17 +111,7 @@ async def myLoop():
     global channelid_list
     print(users_infodic)
     print(channelid_list)
-    #check is there has missed people
-    for channel in channelid_list:
-        Channel = client.get_channel(channel)
-        users = Channel.members
-        print(users)
-        for user in users:
-            if user in users_infodic.keys():
-                pass
-            else:
-                print("加入沒偵測到的使用者")
-                users_infodic[user.id] = 0
+
     for user in users_infodic:
         users_infodic[user] += 1
     loop_time+=1
