@@ -1,0 +1,2 @@
+# DiscordRankBot
+私人discord群組用來玩掛機等級的小機器人
