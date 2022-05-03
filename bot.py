@@ -85,10 +85,10 @@ async def on_voice_state_update(member,before, after):
             del users_infodic[memberid]
         else:
             print("好像有錯誤... 某人離開了 但他沒加入資料過")
-        #await textChannel.send('<@'+str(memberid)+'>' +' 離開公司,停止計算貢獻值!')
+        await textChannel.send('<@'+str(memberid)+'>' +' 離開公司,停止計算貢獻值!')
     elif after.channel is not None:
         print('<@'+str(memberid)+'>' +' 進入公司上班,開始貢獻心力一同壯大麥歡樂企業!')
-        #await textChannel.send('<@'+str(memberid)+'>' +' 進入公司上班,開始貢獻心力一同壯大麥歡樂企業!')
+        await textChannel.send('<@'+str(memberid)+'>' +' 進入公司上班,開始貢獻心力一同壯大麥歡樂企業!')
         if memberid in users_infodic.keys():
             print("此員工已在資料表內 不在更動")
         else:
